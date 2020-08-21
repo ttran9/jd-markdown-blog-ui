@@ -4,6 +4,7 @@ import axios from "axios";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { useParams } from "react-router-dom";
+import { api } from "../api";
 
 const PostDetail = () => {
   const [post, setPost] = useState(null);
@@ -17,8 +18,8 @@ const PostDetail = () => {
       setLoading(true);
       try {
         // the response is asynchronous so we can use await (wait for the call from axios)
-        const res = await axios.get(
-          `http://127.0.0.1:8000/api/posts/${postSlug}`
+        const res = await axios.get(api.posts.retrieve(postSlug)
+          
         );
         console.log(res.data);
         setPost(res.data);

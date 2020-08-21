@@ -4,6 +4,7 @@ import { Divider, Header, Item } from "semantic-ui-react";
 import axios from "axios";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import {api} from "../api";
 
 const PostList = () => {
   const [posts, setPosts] = useState(null);
@@ -15,7 +16,7 @@ const PostList = () => {
       setLoading(true);
       try {
         // the response is asynchronous so we can use await (wait for the call from axios)
-        const res = await axios.get("http://127.0.0.1:8000/api/posts/");
+        const res = await axios.get(api.posts.list);
         setPosts(res.data);
         setLoading(false);
       } catch (error) {
