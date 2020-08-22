@@ -34,7 +34,7 @@ const PostUpdateForm = ({
     setLoading(true);
 
     const formData = new FormData();
-    if (thumbnail) formData.append("thumbnail", thumbnail);
+    formData.append("thumbnail", thumbnail);
     formData.append("title", title);
     formData.append("content", markdown);
     axios
