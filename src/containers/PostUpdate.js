@@ -4,7 +4,6 @@ import axios from "axios";
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
-import { history } from "../helpers";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { useParams } from "react-router-dom";
@@ -16,6 +15,7 @@ const PostUpdateForm = ({
   initialTitle,
   initialContent,
   initialThumbnail,
+  props
 }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
@@ -46,7 +46,7 @@ const PostUpdateForm = ({
       })
       .then((res) => {
         setLoading(false);
-        history.push("/"); // redirect back to the post list.
+        props.history.push("/"); // redirect back to the post list.
       })
       .catch((err) => {
         setLoading(false);
@@ -105,7 +105,7 @@ const PostUpdateForm = ({
   );
 };
 
-const PostUpdate = () => {
+const PostUpdate = (props) => {
   const { postSlug } = useParams();
   const { data, loading, error } = useFetch(api.posts.retrieve(postSlug));
   return (
@@ -118,6 +118,7 @@ const PostUpdate = () => {
           initialTitle={data.title}
           initialContent={data.content}
           initialThumbnail={data.thumbnail}
+          props={props}
         />
       )}
     </>
