@@ -5,10 +5,9 @@ import axios from "axios";
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
-import { history } from "../helpers";
 import { api } from "../api";
 
-const PostCreate = () => {
+const PostCreate = (props) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
 
@@ -37,7 +36,7 @@ const PostCreate = () => {
       })
       .then((res) => {
         setLoading(false);
-        history.push("/"); // redirect back to the post list.
+        props.history.push("/"); // redirect back to the post list.
       })
       .catch((err) => {
         setLoading(false);
