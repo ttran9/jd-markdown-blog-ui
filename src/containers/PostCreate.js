@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Header, Button, Checkbox, Form } from "semantic-ui-react";
+import { Header, Button, Form } from "semantic-ui-react";
 import Message from "../components/Message";
 import axios from "axios";
 import MarkdownIt from "markdown-it";
