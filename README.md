@@ -1,4 +1,5 @@
 - Markdown Blog UI Notes:
 
-- Section 7, Video 19:
-  - [Modal](https://react.semantic-ui.com/modules/modal/)
+- Section 8, Video 20.
+  - [github page](https://github.com/rexxars/react-markdown) for markdown package.
+  - [example of markdown](https://rexxars.github.io/react-markdown/)
