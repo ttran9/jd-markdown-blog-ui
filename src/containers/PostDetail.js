@@ -1,11 +1,19 @@
 import React, { useState } from "react";
-import { Container, Header, Image, Button, Modal } from "semantic-ui-react";
+import {
+  Container,
+  Header,
+  Image,
+  Button,
+  Modal,
+  Divider,
+} from "semantic-ui-react";
 import axios from "axios";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { useParams } from "react-router-dom";
 import { api } from "../api";
 import { useFetch } from "../helpers";
+import ReactMarkdown from "react-markdown";
 
 const DeleteModal = ({ title, postSlug, thumbnail, props }) => {
   const [error, setError] = useState(null);
@@ -71,6 +79,14 @@ const DeleteModal = ({ title, postSlug, thumbnail, props }) => {
   );
 };
 
+const Blockquote = (props) => {
+  return <blockquote>{props.value ? props.value : props.children}</blockquote>;
+};
+
+const Renderers = {
+  blockquote: Blockquote,
+};
+
 const PostDetail = (props) => {
   // can get params from a hook from react router dom package.
   const { postSlug } = useParams();
@@ -88,7 +104,8 @@ const PostDetail = (props) => {
             Last Updated:{" "}
             {`${new Date(data.last_updated).toLocaleDateString()}`}
           </Header>
-          {<p>{data.content}</p>}
+          <ReactMarkdown source={data.content} renderers={Renderers} />
+          <Divider />
           <DeleteModal
             postSlug={postSlug}
             title={data.title}
