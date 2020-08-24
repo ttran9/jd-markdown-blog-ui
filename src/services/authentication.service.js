@@ -1,5 +1,5 @@
 import axios from "axios";
-import {api} from "../api";
+import { api } from "../api";
 
 const authAxios = axios.create(); // gives instance of axios.
 
@@ -27,15 +27,31 @@ function isAuthenticated() {
 
 function login(username, email, password) {
   return axios
-  .post(api.auth.login, {
-    username,
-    email,
-    password,
-  })
-  .then(res => {
-    localStorage.setItem("token", res.data.key);
-    return res
-  })
+    .post(api.auth.login, {
+      username,
+      email,
+      password,
+    })
+    .then((res) => {
+      localStorage.setItem("token", res.data.key);
+      return res;
+    });
+}
+
+function signup(username, email, password1, password2) {
+  // make sure the fields are password1 and password2
+  return axios
+    .post(api.auth.register, {
+      username,
+      email,
+      password1,
+      password2,
+    })
+    .then((res) => {
+      console.log(res.data);
+      localStorage.setItem("token", res.data.key);
+      return res;
+    });
 }
 
 function logout() {
@@ -45,7 +61,8 @@ function logout() {
 const authenticationService = {
   isAuthenticated: isAuthenticated(),
   logout,
-  login
+  login,
+  signup,
 };
 
 export { authAxios, authenticationService };
