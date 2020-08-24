@@ -6,12 +6,13 @@ const baseURL =
 export const api = {
   auth: {
     login: `${baseURL}/dj-rest-auth/login/`,
+    register: `${baseURL}/dj-rest-auth/registration/`,
   },
   posts: {
     list: `${baseURL}/api/posts/`,
-    retrieve: slug => `${baseURL}/api/posts/${slug}/`,
+    retrieve: (slug) => `${baseURL}/api/posts/${slug}/`,
     create: `${baseURL}/api/posts/create/`,
-    update: slug => `${baseURL}/api/posts/${slug}/update/`,
-    delete: slug => `${baseURL}/api/posts/${slug}/delete/`,
+    update: (slug) => `${baseURL}/api/posts/${slug}/update/`,
+    delete: (slug) => `${baseURL}/api/posts/${slug}/delete/`,
   },
 };
