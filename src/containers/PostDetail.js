@@ -10,10 +10,11 @@ import {
 import axios from "axios";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import { useParams } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 import { api } from "../api";
 import { useFetch } from "../helpers";
 import ReactMarkdown from "react-markdown";
+import { authAxios } from "../services";
 
 const DeleteModal = ({ title, postSlug, thumbnail, props }) => {
   const [error, setError] = useState(null);
@@ -21,13 +22,8 @@ const DeleteModal = ({ title, postSlug, thumbnail, props }) => {
 
   function handleSubmit() {
     setLoading(true);
-    axios
-      .delete(api.posts.delete(postSlug), {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: "Token 0ad282a6d3b70edba402d703fe4b554875c26ba9",
-        },
-      })
+    authAxios
+      .delete(api.posts.delete(postSlug))
       .then((res) => {
         setLoading(false);
         // history.push("/"); // redirect back to the post list.
@@ -93,7 +89,7 @@ const PostDetail = (props) => {
   const { data, loading, error } = useFetch(api.posts.retrieve(postSlug));
 
   return (
-    <Container text>
+    <Container text style={{ paddingTop: 10, paddingBottom: 10 }}>
       {error && <Message negative message={error} />}
       {loading && <Loader />}
       {data && (
@@ -106,12 +102,20 @@ const PostDetail = (props) => {
           </Header>
           <ReactMarkdown source={data.content} renderers={Renderers} />
           <Divider />
-          <DeleteModal
-            postSlug={postSlug}
-            title={data.title}
-            thumbnail={data.thumbnail}
-            props={props}
-          />
+
+          {data.is_author && (
+            <>
+              <NavLink to={`/posts/${postSlug}/update`}>
+                <Button color="yellow">Update</Button>
+              </NavLink>
+              <DeleteModal
+                postSlug={postSlug}
+                title={data.title}
+                thumbnail={data.thumbnail}
+                props={props}
+              />
+            </>
+          )}
         </div>
       )}
     </Container>
