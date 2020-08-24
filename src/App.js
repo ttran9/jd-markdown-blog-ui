@@ -19,7 +19,6 @@ function App() {
         <Switch>
           <Route exact path="/" component={PostList} />
           <PrivateRoute path="/create" component={PostCreate} />
-          <Route path="/create" component={PostCreate} />
           <Route exact path="/posts/:postSlug" component={PostDetail} />
           <Route path="/posts/:postSlug/update" component={PostUpdate} />
           <Route path="/login" component={Login} />
