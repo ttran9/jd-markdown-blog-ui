@@ -6,6 +6,7 @@ import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import { api } from "../api";
+import { authAxios } from "../services/";
 
 const PostCreate = (props) => {
   const [error, setError] = useState(null);
@@ -27,11 +28,10 @@ const PostCreate = (props) => {
     formData.append("thumbnail", thumbnail);
     formData.append("title", title);
     formData.append("content", markdown);
-    axios
+    authAxios
       .post(api.posts.create, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: "Token 0ad282a6d3b70edba402d703fe4b554875c26ba9",
         },
       })
       .then((res) => {
