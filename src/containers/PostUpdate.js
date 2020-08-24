@@ -6,16 +6,17 @@ import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import { useParams } from "react-router-dom";
+import { useParams, Redirect } from "react-router-dom";
 import { api } from "../api";
 import { useFetch } from "../helpers";
+import { authAxios } from "../services";
 
 const PostUpdateForm = ({
   postSlug,
   initialTitle,
   initialContent,
   initialThumbnail,
-  props
+  props,
 }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
@@ -37,11 +38,10 @@ const PostUpdateForm = ({
     if (thumbnail) formData.append("thumbnail", thumbnail);
     formData.append("title", title);
     formData.append("content", markdown);
-    axios
+    authAxios
       .put(api.posts.update(postSlug), formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: "Token 0ad282a6d3b70edba402d703fe4b554875c26ba9",
         },
       })
       .then((res) => {
@@ -108,6 +108,9 @@ const PostUpdateForm = ({
 const PostUpdate = (props) => {
   const { postSlug } = useParams();
   const { data, loading, error } = useFetch(api.posts.retrieve(postSlug));
+  if (data && data.is_author === false) {
+    return <Redirect to="/" />;
+  }
   return (
     <>
       {error && <Message negative message={error} />}
