@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import { Container, Dropdown, Menu } from "semantic-ui-react";
 import { authenticationService } from "../services";
@@ -15,7 +15,7 @@ const Navbar = () => {
             <Menu.Item as="li">Posts</Menu.Item>
           </NavLink>
           {authenticationService.isAuthenticated ? (
-            <Fragment>
+            <>
               <Dropdown text="Profile" pointing className="link item">
                 <Dropdown.Menu>
                   <Dropdown.Header>Profile</Dropdown.Header>
@@ -27,11 +27,16 @@ const Navbar = () => {
               <NavLink to="/create">
                 <Menu.Item as="li">Create a Post</Menu.Item>
               </NavLink>
-            </Fragment>
+            </>
           ) : (
-            <NavLink to="/login">
-              <Menu.Item as="li">Login</Menu.Item>
-            </NavLink>
+            <>
+              <NavLink to="/login">
+                <Menu.Item as="li">Login</Menu.Item>
+              </NavLink>
+              <NavLink to="/signup">
+                <Menu.Item as="li">Signup</Menu.Item>
+              </NavLink>
+            </>
           )}
         </Container>
       </Menu>
